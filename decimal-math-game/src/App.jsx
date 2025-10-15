@@ -1,19 +1,36 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import GameScreen from './components/GameScreen'
 import AvatarCustomizer from './components/AvatarCustomizer'
 import Shop from './components/Shop'
 
 function App() {
+  // localStorage에서 초기 데이터 불러오기
+  const getInitialData = () => {
+    try {
+      const savedData = localStorage.getItem('decimalMathGame')
+      if (savedData) {
+        const data = JSON.parse(savedData)
+        console.log('저장된 데이터 불러오기:', data)
+        return data
+      }
+    } catch (error) {
+      console.error('localStorage 불러오기 실패:', error)
+    }
+    return null
+  }
+
+  const initialData = getInitialData()
+
   const [screen, setScreen] = useState('game') // 'game', 'avatar', 'shop'
-  const [level, setLevel] = useState(1)
-  const [score, setScore] = useState(0)
-  const [coins, setCoins] = useState(0)
-  const [totalCorrect, setTotalCorrect] = useState(0)
-  const [totalWrong, setTotalWrong] = useState(0)
+  const [level, setLevel] = useState(initialData?.level || 1)
+  const [score, setScore] = useState(initialData?.score || 0)
+  const [coins, setCoins] = useState(initialData?.coins || 0)
+  const [totalCorrect, setTotalCorrect] = useState(initialData?.totalCorrect || 0)
+  const [totalWrong, setTotalWrong] = useState(initialData?.totalWrong || 0)
   
   // 아바타 상태
-  const [avatar, setAvatar] = useState({
+  const [avatar, setAvatar] = useState(initialData?.avatar || {
     hair: 'basic',
     top: 'basic',
     bottom: 'basic',
@@ -22,13 +39,16 @@ function App() {
   })
   
   // 구매한 아이템 목록
-  const [purchasedItems, setPurchasedItems] = useState({
+  const [purchasedItems, setPurchasedItems] = useState(initialData?.purchasedItems || {
     hair: ['basic'],
     top: ['basic'],
     bottom: ['basic'],
     shoes: ['basic'],
     accessory: ['none']
   })
+
+  // 첫 렌더링 여부 추적
+  const isFirstRender = useRef(true)
 
   // 레벨업 체크 (경험치 기반)
   useEffect(() => {
@@ -48,7 +68,12 @@ function App() {
 
   // localStorage에 진행상황 저장
   useEffect(() => {
-    // 초기 렌더링 시에는 저장하지 않음
+    // 첫 렌더링 시에는 저장하지 않음
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+
     const saveData = {
       level,
       score,
@@ -58,33 +83,14 @@ function App() {
       avatar,
       purchasedItems
     }
+    
     try {
       localStorage.setItem('decimalMathGame', JSON.stringify(saveData))
-      console.log('게임 데이터 저장 완료:', saveData)
+      console.log('게임 데이터 저장:', saveData)
     } catch (error) {
       console.error('localStorage 저장 실패:', error)
     }
   }, [level, score, coins, totalCorrect, totalWrong, avatar, purchasedItems])
-
-  // localStorage에서 진행상황 불러오기
-  useEffect(() => {
-    const savedData = localStorage.getItem('decimalMathGame')
-    if (savedData) {
-      try {
-        const data = JSON.parse(savedData)
-        if (data.level) setLevel(data.level)
-        if (data.score !== undefined) setScore(data.score)
-        if (data.coins !== undefined) setCoins(data.coins)
-        if (data.totalCorrect !== undefined) setTotalCorrect(data.totalCorrect)
-        if (data.totalWrong !== undefined) setTotalWrong(data.totalWrong)
-        if (data.avatar) setAvatar(data.avatar)
-        if (data.purchasedItems) setPurchasedItems(data.purchasedItems)
-        console.log('게임 데이터 불러오기 완료:', data)
-      } catch (error) {
-        console.error('localStorage 불러오기 실패:', error)
-      }
-    }
-  }, [])
 
   const handleCorrectAnswer = (points) => {
     setScore(score + points)
