@@ -48,6 +48,7 @@ function App() {
 
   // localStorage에 진행상황 저장
   useEffect(() => {
+    // 초기 렌더링 시에는 저장하지 않음
     const saveData = {
       level,
       score,
@@ -57,21 +58,31 @@ function App() {
       avatar,
       purchasedItems
     }
-    localStorage.setItem('decimalMathGame', JSON.stringify(saveData))
+    try {
+      localStorage.setItem('decimalMathGame', JSON.stringify(saveData))
+      console.log('게임 데이터 저장 완료:', saveData)
+    } catch (error) {
+      console.error('localStorage 저장 실패:', error)
+    }
   }, [level, score, coins, totalCorrect, totalWrong, avatar, purchasedItems])
 
   // localStorage에서 진행상황 불러오기
   useEffect(() => {
     const savedData = localStorage.getItem('decimalMathGame')
     if (savedData) {
-      const data = JSON.parse(savedData)
-      setLevel(data.level || 1)
-      setScore(data.score || 0)
-      setCoins(data.coins || 0)
-      setTotalCorrect(data.totalCorrect || 0)
-      setTotalWrong(data.totalWrong || 0)
-      setAvatar(data.avatar || avatar)
-      setPurchasedItems(data.purchasedItems || purchasedItems)
+      try {
+        const data = JSON.parse(savedData)
+        if (data.level) setLevel(data.level)
+        if (data.score !== undefined) setScore(data.score)
+        if (data.coins !== undefined) setCoins(data.coins)
+        if (data.totalCorrect !== undefined) setTotalCorrect(data.totalCorrect)
+        if (data.totalWrong !== undefined) setTotalWrong(data.totalWrong)
+        if (data.avatar) setAvatar(data.avatar)
+        if (data.purchasedItems) setPurchasedItems(data.purchasedItems)
+        console.log('게임 데이터 불러오기 완료:', data)
+      } catch (error) {
+        console.error('localStorage 불러오기 실패:', error)
+      }
     }
   }, [])
 
