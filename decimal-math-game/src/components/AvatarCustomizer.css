@@ -1,0 +1,152 @@
+.avatar-customizer {
+  padding: 20px;
+}
+
+.avatar-customizer h2 {
+  text-align: center;
+  color: #667eea;
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.avatar-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.avatar-display {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-tabs button {
+  padding: 15px 25px;
+  font-size: 1.5em;
+  border: 3px solid #e0e0e0;
+  border-radius: 15px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.category-tabs button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.category-tabs button.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+  transform: translateY(-3px);
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.item-card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 3px solid transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 240px;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.item-card.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.item-card.locked:hover {
+  transform: none;
+}
+
+.item-card.equipped {
+  border-color: #2ecc71;
+  background: linear-gradient(135deg, #e8f8f5 0%, #d5f4e6 100%);
+}
+
+.item-preview {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.item-name {
+  font-size: 1em;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.locked-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+}
+
+.equipped-badge {
+  background: #2ecc71;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .avatar-display {
+    padding: 20px;
+  }
+
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+  }
+
+  .item-card {
+    padding: 10px;
+    min-height: 200px;
+  }
+
+  .category-tabs button {
+    padding: 12px 20px;
+    font-size: 1.3em;
+  }
+}
