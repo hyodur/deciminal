@@ -307,15 +307,19 @@ function Avatar({ avatar, size = 'medium' }) {
         )}
       </g>
 
-      {/* 팔 */}
+      {/* 팔 - 자연스럽게 내려오는 형태 */}
       <g className="arms">
         {/* 왼팔 */}
-        <ellipse cx="56" cy="165" rx="14" ry="38" fill={topColors[avatar.top]} stroke="#5D4E37" strokeWidth="2.5" transform="rotate(-20 56 165)"/>
-        <circle cx="50" cy="190" r="10" fill="#FDBCB4" stroke="#E09E8F" strokeWidth="2"/>
+        <path d="M 60 145 Q 58 160 58 175 Q 58 185 56 195" 
+              stroke={topColors[avatar.top]} strokeWidth="28" fill="none" 
+              strokeLinecap="round"/>
+        <circle cx="56" cy="195" r="11" fill="#FDBCB4" stroke="#E09E8F" strokeWidth="2.5"/>
         
         {/* 오른팔 */}
-        <ellipse cx="144" cy="165" rx="14" ry="38" fill={topColors[avatar.top]} stroke="#5D4E37" strokeWidth="2.5" transform="rotate(20 144 165)"/>
-        <circle cx="150" cy="190" r="10" fill="#FDBCB4" stroke="#E09E8F" strokeWidth="2"/>
+        <path d="M 140 145 Q 142 160 142 175 Q 142 185 144 195" 
+              stroke={topColors[avatar.top]} strokeWidth="28" fill="none" 
+              strokeLinecap="round"/>
+        <circle cx="144" cy="195" r="11" fill="#FDBCB4" stroke="#E09E8F" strokeWidth="2.5"/>
       </g>
 
       {/* 목 */}
@@ -367,68 +371,133 @@ function Avatar({ avatar, size = 'medium' }) {
         <circle cx="130" cy="80" r="2" fill="#FFB6C1" opacity="0.5"/>
       </g>
 
-      {/* 헤어 - 얼굴 안 가리게 위로! */}
+      {/* 헤어 - 곡선으로 자연스럽게! */}
       <g className="hair" filter="url(#softShadow)">
         {avatar.hair === 'basic' && (
           <>
-            <ellipse cx="100" cy="38" rx="48" ry="30" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="70" cy="50" rx="18" ry="22" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="130" cy="50" rx="18" ry="22" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="85" cy="32" r="8" fill={hairColors[avatar.hair]} opacity="0.6"/>
-            <circle cx="115" cy="32" r="8" fill={hairColors[avatar.hair]} opacity="0.6"/>
+            {/* 메인 헤어 */}
+            <path d="M 55 50 Q 52 25 70 18 Q 85 15 100 15 Q 115 15 130 18 Q 148 25 145 50 
+                     Q 148 45 145 60 Q 143 55 140 52 L 60 52 Q 57 55 55 60 Q 52 45 55 50 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 왼쪽 머리카락 */}
+            <path d="M 55 45 Q 50 50 52 65 Q 54 72 60 72 Q 62 65 60 55 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 오른쪽 머리카락 */}
+            <path d="M 145 45 Q 150 50 148 65 Q 146 72 140 72 Q 138 65 140 55 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 앞머리 장식 */}
+            <path d="M 80 25 Q 85 20 90 25" stroke={hairColors[avatar.hair]} strokeWidth="4" fill="none" opacity="0.5" strokeLinecap="round"/>
+            <path d="M 110 25 Q 115 20 120 25" stroke={hairColors[avatar.hair]} strokeWidth="4" fill="none" opacity="0.5" strokeLinecap="round"/>
           </>
         )}
         {avatar.hair === 'short' && (
           <>
-            <path d="M 58 60 Q 58 28 100 22 Q 142 28 142 60 L 142 50 Q 140 32 100 28 Q 60 32 58 50 Z" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="75" cy="38" rx="12" ry="10" fill={hairColors[avatar.hair]}/>
-            <ellipse cx="125" cy="38" rx="12" ry="10" fill={hairColors[avatar.hair]}/>
+            {/* 숏컷 스타일 */}
+            <path d="M 58 60 Q 55 40 65 25 Q 80 15 100 15 Q 120 15 135 25 Q 145 40 142 60 
+                     L 140 55 Q 138 35 120 28 Q 100 25 80 28 Q 62 35 60 55 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 앞머리 레이어 */}
+            <path d="M 68 42 Q 70 32 80 30 Q 85 35 82 45" 
+                  fill={hairColors[avatar.hair]} opacity="0.7"/>
+            <path d="M 132 42 Q 130 32 120 30 Q 115 35 118 45" 
+                  fill={hairColors[avatar.hair]} opacity="0.7"/>
           </>
         )}
         {avatar.hair === 'long' && (
           <>
-            <ellipse cx="100" cy="38" rx="48" ry="30" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="70" cy="50" rx="18" ry="22" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="130" cy="50" rx="18" ry="22" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <path d="M 58 60 Q 52 80 50 110 Q 49 120 54 123 Q 58 123 60 115 L 60 65" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <path d="M 142 60 Q 148 80 150 110 Q 151 120 146 123 Q 142 123 140 115 L 140 65" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 롱헤어 상단 */}
+            <path d="M 55 50 Q 52 25 70 18 Q 85 15 100 15 Q 115 15 130 18 Q 148 25 145 50 
+                     Q 148 45 145 60 L 140 55 L 60 55 L 55 60 Q 52 45 55 50 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 왼쪽 긴 머리 */}
+            <path d="M 55 55 Q 50 65 48 85 Q 46 105 48 120 Q 49 128 54 128 
+                     Q 58 125 58 115 Q 59 95 60 75 Q 60 65 58 60 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 오른쪽 긴 머리 */}
+            <path d="M 145 55 Q 150 65 152 85 Q 154 105 152 120 Q 151 128 146 128 
+                     Q 142 125 142 115 Q 141 95 140 75 Q 140 65 142 60 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 머리카락 웨이브 */}
+            <path d="M 52 70 Q 48 75 50 82" stroke={hairColors[avatar.hair]} strokeWidth="3" fill="none" opacity="0.4" strokeLinecap="round"/>
+            <path d="M 148 70 Q 152 75 150 82" stroke={hairColors[avatar.hair]} strokeWidth="3" fill="none" opacity="0.4" strokeLinecap="round"/>
           </>
         )}
         {avatar.hair === 'curly' && (
           <>
-            <circle cx="100" cy="32" r="28" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="70" cy="48" r="18" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="130" cy="48" r="18" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="85" cy="25" r="14" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="115" cy="25" r="14" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="100" cy="20" r="10" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 곱슬머리 베이스 */}
+            <path d="M 55 58 Q 50 35 68 20 Q 85 12 100 12 Q 115 12 132 20 Q 150 35 145 58 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 곱슬 볼륨감 - 왼쪽 */}
+            <path d="M 60 35 Q 55 28 60 22 Q 65 18 70 22 Q 72 28 68 35 Q 65 40 60 35 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 곱슬 볼륨감 - 오른쪽 */}
+            <path d="M 140 35 Q 145 28 140 22 Q 135 18 130 22 Q 128 28 132 35 Q 135 40 140 35 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 곱슬 볼륨감 - 위 */}
+            <path d="M 100 18 Q 95 12 100 8 Q 105 6 110 10 Q 112 15 108 20 Q 104 22 100 18 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 곱슬 디테일 */}
+            <path d="M 75 25 Q 72 20 75 16 Q 78 15 80 18 Q 80 23 77 26" 
+                  fill={hairColors[avatar.hair]} opacity="0.8"/>
+            <path d="M 125 25 Q 128 20 125 16 Q 122 15 120 18 Q 120 23 123 26" 
+                  fill={hairColors[avatar.hair]} opacity="0.8"/>
           </>
         )}
         {avatar.hair === 'ponytail' && (
           <>
-            <ellipse cx="100" cy="38" rx="48" ry="30" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="70" cy="50" rx="18" ry="22" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="148" cy="70" rx="12" ry="32" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="140" cy="60" r="12" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="142" cy="56" rx="8" ry="6" fill="#FFB6D9" stroke="#FF69B4" strokeWidth="2"/>
-            <path d="M 136 54 L 140 50 L 144 54" stroke="#FF69B4" strokeWidth="2" fill="none"/>
+            {/* 포니테일 앞머리 */}
+            <path d="M 55 50 Q 52 30 70 20 Q 85 16 100 16 Q 108 16 115 18 
+                     Q 120 22 122 35 L 118 48 L 60 50 L 55 58 Q 52 48 55 50 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 왼쪽 사이드 */}
+            <path d="M 55 45 Q 50 50 52 65 Q 54 72 60 72 Q 62 65 60 55 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 포니테일 묶은 부분 */}
+            <path d="M 135 48 Q 140 52 142 58 Q 143 62 142 68 Q 140 70 138 68" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 포니테일 늘어진 부분 */}
+            <path d="M 140 65 Q 146 70 148 85 Q 150 100 148 110 Q 147 115 144 115 
+                     Q 142 110 142 100 Q 141 85 138 75 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 리본 */}
+            <path d="M 135 56 Q 132 52 135 50 Q 138 50 140 52 Q 142 54 140 56 
+                     Q 138 58 135 56 M 140 52 Q 143 50 146 52 Q 148 54 146 58 Q 144 58 142 56" 
+                  fill="#FFB6D9" stroke="#FF69B4" strokeWidth="2"/>
           </>
         )}
         {avatar.hair === 'bun' && (
           <>
-            <ellipse cx="100" cy="42" rx="48" ry="26" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="100" cy="18" r="18" fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="100" cy="18" rx="14" ry="9" fill={hairColors[avatar.hair]} opacity="0.5"/>
-            <path d="M 88 22 Q 100 24 112 22" stroke="#5D4E37" strokeWidth="1.5" fill="none"/>
+            {/* 번 헤어 베이스 */}
+            <path d="M 55 48 Q 52 35 68 25 Q 85 18 100 18 Q 115 18 132 25 Q 148 35 145 48 
+                     L 142 52 L 58 52 L 55 48 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 번 (상투) */}
+            <path d="M 85 20 Q 82 10 90 5 Q 100 2 110 5 Q 118 10 115 20 
+                     Q 112 28 100 30 Q 88 28 85 20 Z" 
+                  fill={hairColors[avatar.hair]} stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 번 내부 디테일 */}
+            <path d="M 90 18 Q 88 12 95 10 Q 100 9 105 10 Q 112 12 110 18 Q 108 22 100 23 Q 92 22 90 18" 
+                  fill={hairColors[avatar.hair]} opacity="0.6"/>
+            {/* 번 묶은 선 */}
+            <path d="M 88 22 Q 95 24 100 24 Q 105 24 112 22" 
+                  stroke="#5D4E37" strokeWidth="2" fill="none" strokeLinecap="round"/>
           </>
         )}
         {avatar.hair === 'colorful' && (
           <>
-            <ellipse cx="100" cy="38" rx="48" ry="30" fill="url(#rainbowGradient)" stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="70" cy="50" rx="18" ry="22" fill="url(#rainbowGradient)" stroke="#5D4E37" strokeWidth="2.5"/>
-            <ellipse cx="130" cy="50" rx="18" ry="22" fill="url(#rainbowGradient)" stroke="#5D4E37" strokeWidth="2.5"/>
-            <circle cx="90" cy="30" r="9" fill="#FFD700" opacity="0.8"/>
-            <circle cx="110" cy="30" r="9" fill="#FFD700" opacity="0.8"/>
+            {/* 컬러풀 헤어 메인 */}
+            <path d="M 55 50 Q 52 25 70 18 Q 85 15 100 15 Q 115 15 130 18 Q 148 25 145 50 
+                     Q 148 45 145 60 Q 143 55 140 52 L 60 52 Q 57 55 55 60 Q 52 45 55 50 Z" 
+                  fill="url(#rainbowGradient)" stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 왼쪽 컬러 스트랜드 */}
+            <path d="M 55 45 Q 50 50 52 65 Q 54 72 60 72 Q 62 65 60 55 Z" 
+                  fill="url(#rainbowGradient)" stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 오른쪽 컬러 스트랜드 */}
+            <path d="M 145 45 Q 150 50 148 65 Q 146 72 140 72 Q 138 65 140 55 Z" 
+                  fill="url(#rainbowGradient)" stroke="#5D4E37" strokeWidth="2.5"/>
+            {/* 반짝이 효과 */}
+            <path d="M 85 28 L 88 25 L 91 28 L 88 31 Z" fill="#FFD700" opacity="0.8"/>
+            <path d="M 115 28 L 118 25 L 121 28 L 118 31 Z" fill="#FFD700" opacity="0.8"/>
           </>
         )}
       </g>
