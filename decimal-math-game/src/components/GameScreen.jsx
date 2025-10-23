@@ -311,7 +311,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
         <button 
           className="submit-button" 
           onClick={handleSubmit}
-          disabled={feedback !== null || userAnswer === ''}
+          disabled={feedback !== null || digitTenths === '' || digitHundredths === ''}
         >
           제출하기
         </button>
