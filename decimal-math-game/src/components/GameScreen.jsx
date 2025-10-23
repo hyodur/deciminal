@@ -21,6 +21,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
   const [carryTens, setCarryTens] = useState('') // 십의 자리 받아올림
   const [carryOnes, setCarryOnes] = useState('') // 일의 자리 받아올림
   const [carryTenths, setCarryTenths] = useState('') // 소수 첫째 자리 받아올림
+  const [carryHundredths, setCarryHundredths] = useState('') // 소수 둘째 자리 받아올림
 
   // 사운드 효과 함수
   const playSound = (isCorrect) => {
@@ -97,6 +98,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
     setCarryTens('')
     setCarryOnes('')
     setCarryTenths('')
+    setCarryHundredths('')
     setFeedback(null)
   }
 
@@ -172,6 +174,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
         setCarryTens('')
         setCarryOnes('')
         setCarryTenths('')
+        setCarryHundredths('')
       }, 2000)
     }
   }
@@ -282,7 +285,15 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
                 className="carry-input"
                 placeholder=""
               />
-              <span className="carry-placeholder"></span>
+              <input
+  type="text"
+  maxLength="2"
+  value={carryHundredths}
+  onChange={(e) => handleCarryChange('hundredths', e.target.value)}
+  disabled={feedback !== null}
+  className="carry-input"
+  placeholder=""
+/>
             </div>
             
             <div className="math-row number-row">
