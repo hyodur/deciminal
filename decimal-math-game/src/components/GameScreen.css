@@ -83,6 +83,50 @@
   min-height: 70px;
 }
 
+/* 받아올림 메모칸 */
+.carry-row {
+  min-height: 35px;
+  margin-bottom: 5px;
+}
+
+.carry-input {
+  width: 60px;
+  height: 30px;
+  font-size: 1.2em;
+  font-weight: normal;
+  text-align: center;
+  border: 1px dashed #bbb;
+  border-radius: 5px;
+  background: #fffef0;
+  color: #999;
+  font-family: 'Courier New', monospace;
+  transition: all 0.2s ease;
+}
+
+.carry-input:focus {
+  outline: none;
+  border-color: #ffa500;
+  background: #fff9e6;
+  color: #666;
+}
+
+.carry-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.decimal-point-small {
+  width: 20px;
+  height: 30px;
+  display: inline-block;
+}
+
+.carry-placeholder {
+  width: 60px;
+  height: 30px;
+  display: inline-block;
+}
+
 .operator-space {
   width: 60px;
   display: inline-block;
@@ -330,5 +374,25 @@
 
   .number-row {
     min-height: 55px;
+  }
+
+  .carry-row {
+    min-height: 28px;
+  }
+
+  .carry-input {
+    width: 45px;
+    height: 25px;
+    font-size: 1em;
+  }
+
+  .decimal-point-small {
+    width: 15px;
+    height: 25px;
+  }
+
+  .carry-placeholder {
+    width: 45px;
+    height: 25px;
   }
 }

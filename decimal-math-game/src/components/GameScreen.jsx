@@ -15,6 +15,12 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
   const [digitOnes, setDigitOnes] = useState('') // 일의 자리
   const [digitTenths, setDigitTenths] = useState('') // 소수 첫째 자리
   const [digitHundredths, setDigitHundredths] = useState('') // 소수 둘째 자리
+  
+  // 받아올림 메모칸 (선택적, 채점 안 함)
+  const [carryHundreds, setCarryHundreds] = useState('') // 백의 자리 받아올림
+  const [carryTens, setCarryTens] = useState('') // 십의 자리 받아올림
+  const [carryOnes, setCarryOnes] = useState('') // 일의 자리 받아올림
+  const [carryTenths, setCarryTenths] = useState('') // 소수 첫째 자리 받아올림
 
   // 사운드 효과 함수
   const playSound = (isCorrect) => {
@@ -87,6 +93,10 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
     setDigitOnes('')
     setDigitTenths('')
     setDigitHundredths('')
+    setCarryHundreds('')
+    setCarryTens('')
+    setCarryOnes('')
+    setCarryTenths('')
     setFeedback(null)
   }
 
@@ -155,6 +165,10 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
         setDigitOnes('')
         setDigitTenths('')
         setDigitHundredths('')
+        setCarryHundreds('')
+        setCarryTens('')
+        setCarryOnes('')
+        setCarryTenths('')
       }, 2000)
     }
   }
@@ -181,6 +195,17 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
           document.getElementById('digit-hundreds')?.focus()
         }
       }
+    }
+  }
+  
+  // 받아올림 메모칸 입력 처리 (채점 안 함)
+  const handleCarryChange = (position, value) => {
+    // 숫자만 입력 가능하고 한 자리만
+    if (value === '' || /^[0-9]$/.test(value)) {
+      if (position === 'hundreds') setCarryHundreds(value)
+      else if (position === 'tens') setCarryTens(value)
+      else if (position === 'ones') setCarryOnes(value)
+      else if (position === 'tenths') setCarryTenths(value)
     }
   }
 
@@ -214,6 +239,49 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
         
         <div className="vertical-problem">
           <div className="vertical-math">
+            {/* 받아올림 메모칸 (선택적) */}
+            <div className="math-row carry-row">
+              <span className="operator-space"></span>
+              <input
+                type="text"
+                maxLength="1"
+                value={carryHundreds}
+                onChange={(e) => handleCarryChange('hundreds', e.target.value)}
+                disabled={feedback !== null}
+                className="carry-input"
+                placeholder=""
+              />
+              <input
+                type="text"
+                maxLength="1"
+                value={carryTens}
+                onChange={(e) => handleCarryChange('tens', e.target.value)}
+                disabled={feedback !== null}
+                className="carry-input"
+                placeholder=""
+              />
+              <input
+                type="text"
+                maxLength="1"
+                value={carryOnes}
+                onChange={(e) => handleCarryChange('ones', e.target.value)}
+                disabled={feedback !== null}
+                className="carry-input"
+                placeholder=""
+              />
+              <span className="decimal-point-small"></span>
+              <input
+                type="text"
+                maxLength="1"
+                value={carryTenths}
+                onChange={(e) => handleCarryChange('tenths', e.target.value)}
+                disabled={feedback !== null}
+                className="carry-input"
+                placeholder=""
+              />
+              <span className="carry-placeholder"></span>
+            </div>
+            
             <div className="math-row number-row">
               <span className="operator-space"></span>
               <span className="digit-box">{Math.floor(num1 / 100) || ''}</span>
