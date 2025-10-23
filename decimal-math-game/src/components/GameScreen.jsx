@@ -76,8 +76,8 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
       decimalPlaces = Math.random() > 0.5 ? 1 : 2
     }
     
-    const n1 = parseFloat((Math.random() * maxNum).toFixed(decimalPlaces))
-    const n2 = parseFloat((Math.random() * maxNum).toFixed(decimalPlaces))
+    const n1 = parseFloat((Math.random() * maxNum).toFixed(2))
+    const n2 = parseFloat((Math.random() * maxNum).toFixed(2))
     
     // 뺄셈의 경우 음수가 나오지 않도록 조정
     if (!isAddition && n1 < n2) {
