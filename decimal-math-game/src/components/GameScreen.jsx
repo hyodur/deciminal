@@ -117,9 +117,6 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    // 최소한 소수 첫째자리는 입력되어야 함 (둘째자리는 선택)
-    if (digitTenths === '') return
-    
     // 입력된 자릿수를 조합하여 답 만들기
     // 일의 자리는 필수! 십의 자리나 백의 자리만 비워둘 수 있음
     if (digitOnes === '') {
@@ -132,10 +129,11 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
     const onesVal = parseInt(digitOnes)
     const naturalPart = hundredsVal * 100 + tensVal * 10 + onesVal
     
-    // 소수 둘째자리가 비어있으면 0으로 처리 (3.4 = 3.40)
+    // 소수 부분 처리: 비어있으면 0으로 (12 = 12.00, 3.4 = 3.40)
+    const tenthsVal = digitTenths === '' ? '0' : digitTenths
     const hundredthsVal = digitHundredths === '' ? '0' : digitHundredths
     
-    const userAnswerNum = parseFloat(`${naturalPart}.${digitTenths}${hundredthsVal}`)
+    const userAnswerNum = parseFloat(`${naturalPart}.${tenthsVal}${hundredthsVal}`)
     const correctAnswer = parseFloat(calculateAnswer())
     
     if (Math.abs(correctAnswer - userAnswerNum) < 0.01) {
@@ -399,7 +397,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
         <button 
           className="submit-button" 
           onClick={handleSubmit}
-          disabled={feedback !== null || digitOnes === '' || digitTenths === ''}
+          disabled={feedback !== null || digitOnes === ''}
         >
           제출하기
         </button>
