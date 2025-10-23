@@ -58,24 +58,20 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
     setOperation(isAddition ? '+' : '-')
     
     let maxNum = 10
-    let decimalPlaces = 1
     
     // 레벨에 따라 난이도 조정
-    // 모든 레벨에서 소수 1자리 또는 2자리가 랜덤으로 나옴
     if (level <= 3) {
       maxNum = 10
-      decimalPlaces = Math.random() > 0.5 ? 1 : 2
     } else if (level <= 6) {
       maxNum = 50
-      decimalPlaces = Math.random() > 0.5 ? 1 : 2
     } else if (level <= 10) {
       maxNum = 100
-      decimalPlaces = Math.random() > 0.5 ? 1 : 2
     } else {
       maxNum = 200
-      decimalPlaces = Math.random() > 0.5 ? 1 : 2
     }
     
+    // 항상 소수 둘째자리까지 생성하고 parseFloat로 변환
+    // parseFloat는 계산을 위해 사용하지만, 표시할 때는 항상 .toFixed(2) 사용
     const n1 = parseFloat((Math.random() * maxNum).toFixed(2))
     const n2 = parseFloat((Math.random() * maxNum).toFixed(2))
     
@@ -291,8 +287,8 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
               <span className="digit-box">{Math.floor(num1 / 10) % 10 || (num1 >= 10 ? '0' : '')}</span>
               <span className="digit-box">{Math.floor(num1) % 10}</span>
               <span className="decimal-point">.</span>
-              <span className="digit-box">{Math.floor((num1 * 10) % 10)}</span>
-              <span className="digit-box">{Math.floor((num1 * 100) % 10)}</span>
+              <span className="digit-box">{num1.toFixed(2).split('.')[1][0]}</span>
+              <span className="digit-box">{num1.toFixed(2).split('.')[1][1]}</span>
             </div>
             <div className="math-row number-row">
               <span className="operator-display">{operation}</span>
@@ -300,8 +296,8 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
               <span className="digit-box">{Math.floor(num2 / 10) % 10 || (num2 >= 10 ? '0' : '')}</span>
               <span className="digit-box">{Math.floor(num2) % 10}</span>
               <span className="decimal-point">.</span>
-              <span className="digit-box">{Math.floor((num2 * 10) % 10)}</span>
-              <span className="digit-box">{Math.floor((num2 * 100) % 10)}</span>
+              <span className="digit-box">{num2.toFixed(2).split('.')[1][0]}</span>
+              <span className="digit-box">{num2.toFixed(2).split('.')[1][1]}</span>
             </div>
             <div className="math-row line-row">
               <div className="horizontal-line"></div>
