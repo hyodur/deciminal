@@ -8,6 +8,11 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
   const [userAnswer, setUserAnswer] = useState('')
   const [feedback, setFeedback] = useState(null)
   const [streak, setStreak] = useState(0)
+  
+  // 각 자릿수 입력 상태 (일의자리, 소수첫째, 소수둘째)
+  const [digit1, setDigit1] = useState('') // 일의 자리
+  const [digit2, setDigit2] = useState('') // 소수 첫째 자리
+  const [digit3, setDigit3] = useState('') // 소수 둘째 자리
 
   // 사운드 효과 함수
   const playSound = (isCorrect) => {
@@ -75,6 +80,9 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
     }
     
     setUserAnswer('')
+    setDigit1('')
+    setDigit2('')
+    setDigit3('')
     setFeedback(null)
   }
 
@@ -93,10 +101,12 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    if (userAnswer === '') return
+    // 모든 자릿수가 입력되었는지 확인
+    if (digit1 === '' || digit2 === '' || digit3 === '') return
     
+    // 입력된 자릿수를 조합하여 답 만들기
+    const userAnswerNum = parseFloat(`${digit1}.${digit2}${digit3}`)
     const correctAnswer = parseFloat(calculateAnswer())
-    const userAnswerNum = parseFloat(userAnswer)
     
     if (Math.abs(correctAnswer - userAnswerNum) < 0.01) {
       // 정답!
@@ -125,8 +135,29 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
       
       setTimeout(() => {
         setFeedback(null)
-        setUserAnswer('')
+        setDigit1('')
+        setDigit2('')
+        setDigit3('')
       }, 2000)
+    }
+  }
+  
+  // 자릿수 입력 처리
+  const handleDigitChange = (digitNum, value) => {
+    // 숫자만 입력 가능하고 한 자리만
+    if (value === '' || /^[0-9]$/.test(value)) {
+      if (digitNum === 1) setDigit1(value)
+      else if (digitNum === 2) setDigit2(value)
+      else if (digitNum === 3) setDigit3(value)
+      
+      // 자동으로 다음 칸으로 이동
+      if (value !== '') {
+        if (digitNum === 3) {
+          document.getElementById('digit2')?.focus()
+        } else if (digitNum === 2) {
+          document.getElementById('digit1')?.focus()
+        }
+      }
     }
   }
 
@@ -162,26 +193,55 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
           <div className="vertical-math">
             <div className="math-row number-row">
               <span className="operator-space"></span>
-              <span className="number-display">{num1.toFixed(2)}</span>
+              <span className="digit-box">{Math.floor(num1)}</span>
+              <span className="decimal-point">.</span>
+              <span className="digit-box">{Math.floor((num1 * 10) % 10)}</span>
+              <span className="digit-box">{Math.floor((num1 * 100) % 10)}</span>
             </div>
             <div className="math-row number-row">
               <span className="operator-display">{operation}</span>
-              <span className="number-display">{num2.toFixed(2)}</span>
+              <span className="digit-box">{Math.floor(num2)}</span>
+              <span className="decimal-point">.</span>
+              <span className="digit-box">{Math.floor((num2 * 10) % 10)}</span>
+              <span className="digit-box">{Math.floor((num2 * 100) % 10)}</span>
             </div>
             <div className="math-row line-row">
               <div className="horizontal-line"></div>
             </div>
             <div className="math-row answer-row">
               <form onSubmit={handleSubmit} className="answer-form">
+                <span className="operator-space"></span>
                 <input
-                  type="number"
-                  step="0.01"
-                  value={userAnswer}
-                  onChange={(e) => setUserAnswer(e.target.value)}
-                  placeholder="?"
+                  id="digit1"
+                  type="text"
+                  maxLength="1"
+                  value={digit1}
+                  onChange={(e) => handleDigitChange(1, e.target.value)}
                   disabled={feedback !== null}
+                  className="digit-input"
+                  placeholder="?"
+                />
+                <span className="decimal-point">.</span>
+                <input
+                  id="digit2"
+                  type="text"
+                  maxLength="1"
+                  value={digit2}
+                  onChange={(e) => handleDigitChange(2, e.target.value)}
+                  disabled={feedback !== null}
+                  className="digit-input"
+                  placeholder="?"
+                />
+                <input
+                  id="digit3"
+                  type="text"
+                  maxLength="1"
+                  value={digit3}
+                  onChange={(e) => handleDigitChange(3, e.target.value)}
+                  disabled={feedback !== null}
+                  className="digit-input"
+                  placeholder="?"
                   autoFocus
-                  className="vertical-input"
                 />
               </form>
             </div>

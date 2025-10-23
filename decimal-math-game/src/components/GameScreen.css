@@ -55,7 +55,7 @@
   margin-bottom: 30px;
 }
 
-/* 세로셈 스타일 */
+/* 세로셈 스타일 - 자릿수 칸 */
 .vertical-problem {
   display: flex;
   justify-content: center;
@@ -74,21 +74,22 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 8px;
   margin-bottom: 15px;
   font-family: 'Courier New', monospace;
 }
 
 .number-row {
-  height: 60px;
+  min-height: 70px;
 }
 
 .operator-space {
-  width: 50px;
+  width: 60px;
   display: inline-block;
 }
 
 .operator-display {
-  width: 50px;
+  width: 60px;
   font-size: 3em;
   font-weight: bold;
   color: #667eea;
@@ -96,13 +97,27 @@
   display: inline-block;
 }
 
-.number-display {
+.digit-box {
+  width: 60px;
+  height: 70px;
   font-size: 3em;
   font-weight: bold;
   color: #2c3e50;
-  text-align: right;
-  min-width: 200px;
-  letter-spacing: 8px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+}
+
+.decimal-point {
+  font-size: 3em;
+  font-weight: bold;
+  color: #667eea;
+  width: 20px;
+  text-align: center;
   display: inline-block;
 }
 
@@ -115,7 +130,7 @@
   height: 4px;
   background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
   border-radius: 2px;
-  margin-left: 50px;
+  margin-left: 60px;
 }
 
 .answer-row {
@@ -125,38 +140,41 @@
 .answer-form {
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 8px;
 }
 
-.vertical-input {
+.digit-input {
+  width: 60px;
+  height: 70px;
   font-size: 3em;
   font-weight: bold;
-  text-align: right;
-  min-width: 200px;
-  padding: 10px 0;
-  border: none;
-  border-bottom: 4px solid #667eea;
-  background: transparent;
+  text-align: center;
+  border: 3px solid #667eea;
+  border-radius: 10px;
+  background: white;
   color: #2c3e50;
-  letter-spacing: 8px;
   font-family: 'Courier New', monospace;
   transition: all 0.3s ease;
 }
 
-.vertical-input:focus {
+.digit-input:focus {
   outline: none;
-  border-bottom-color: #764ba2;
-  background: rgba(102, 126, 234, 0.05);
+  border-color: #764ba2;
+  box-shadow: 0 0 15px rgba(118, 75, 162, 0.4);
+  transform: scale(1.05);
+  background: #fff9e6;
 }
 
-.vertical-input:disabled {
+.digit-input:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  background: #f0f0f0;
 }
 
-.vertical-input::placeholder {
+.digit-input::placeholder {
   color: #bbb;
-  letter-spacing: normal;
 }
 
 .feedback {
@@ -264,32 +282,41 @@
   }
 
   .vertical-math {
-    padding: 20px 30px;
+    padding: 20px 25px;
   }
 
   .operator-space {
-    width: 30px;
+    width: 40px;
   }
 
   .operator-display {
-    width: 30px;
+    width: 40px;
     font-size: 2em;
   }
 
-  .number-display {
+  .digit-box {
+    width: 45px;
+    height: 55px;
     font-size: 2em;
-    min-width: 150px;
-    letter-spacing: 5px;
   }
 
-  .vertical-input {
+  .digit-input {
+    width: 45px;
+    height: 55px;
     font-size: 2em;
-    min-width: 150px;
-    letter-spacing: 5px;
+  }
+
+  .decimal-point {
+    font-size: 2em;
+    width: 15px;
   }
 
   .horizontal-line {
-    margin-left: 30px;
+    margin-left: 40px;
+  }
+
+  .math-row {
+    gap: 5px;
   }
 
   .stat-number {
@@ -302,6 +329,6 @@
   }
 
   .number-row {
-    height: 45px;
+    min-height: 55px;
   }
 }
