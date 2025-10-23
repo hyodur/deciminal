@@ -92,7 +92,7 @@
 .carry-input {
   width: 60px;
   height: 30px;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: normal;
   text-align: center;
   border: 1px dashed #bbb;
@@ -101,6 +101,7 @@
   color: #999;
   font-family: 'Courier New', monospace;
   transition: all 0.2s ease;
+  letter-spacing: 1px;
 }
 
 .carry-input:focus {

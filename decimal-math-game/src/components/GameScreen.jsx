@@ -198,10 +198,10 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
     }
   }
   
-  // 받아올림 메모칸 입력 처리 (채점 안 함)
+  // 받아올림/받아내림 메모칸 입력 처리 (채점 안 함)
   const handleCarryChange = (position, value) => {
-    // 숫자만 입력 가능하고 한 자리만
-    if (value === '' || /^[0-9]$/.test(value)) {
+    // 숫자만 입력 가능하고 두 자리까지 (받아내림은 10 입력 가능)
+    if (value === '' || /^[0-9]{1,2}$/.test(value)) {
       if (position === 'hundreds') setCarryHundreds(value)
       else if (position === 'tens') setCarryTens(value)
       else if (position === 'ones') setCarryOnes(value)
@@ -239,12 +239,12 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
         
         <div className="vertical-problem">
           <div className="vertical-math">
-            {/* 받아올림 메모칸 (선택적) */}
+            {/* 받아올림/받아내림 메모칸 (선택적) */}
             <div className="math-row carry-row">
               <span className="operator-space"></span>
               <input
                 type="text"
-                maxLength="1"
+                maxLength="2"
                 value={carryHundreds}
                 onChange={(e) => handleCarryChange('hundreds', e.target.value)}
                 disabled={feedback !== null}
@@ -253,7 +253,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
               />
               <input
                 type="text"
-                maxLength="1"
+                maxLength="2"
                 value={carryTens}
                 onChange={(e) => handleCarryChange('tens', e.target.value)}
                 disabled={feedback !== null}
@@ -262,7 +262,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
               />
               <input
                 type="text"
-                maxLength="1"
+                maxLength="2"
                 value={carryOnes}
                 onChange={(e) => handleCarryChange('ones', e.target.value)}
                 disabled={feedback !== null}
@@ -272,7 +272,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
               <span className="decimal-point-small"></span>
               <input
                 type="text"
-                maxLength="1"
+                maxLength="2"
                 value={carryTenths}
                 onChange={(e) => handleCarryChange('tenths', e.target.value)}
                 disabled={feedback !== null}
