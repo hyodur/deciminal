@@ -122,12 +122,6 @@
   display: inline-block;
 }
 
-.carry-placeholder {
-  width: 60px;
-  height: 30px;
-  display: inline-block;
-}
-
 .operator-space {
   width: 60px;
   display: inline-block;
