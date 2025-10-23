@@ -9,10 +9,12 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
   const [feedback, setFeedback] = useState(null)
   const [streak, setStreak] = useState(0)
   
-  // 각 자릿수 입력 상태 (일의자리, 소수첫째, 소수둘째)
-  const [digit1, setDigit1] = useState('') // 일의 자리
-  const [digit2, setDigit2] = useState('') // 소수 첫째 자리
-  const [digit3, setDigit3] = useState('') // 소수 둘째 자리
+  // 각 자릿수 입력 상태 (백의자리, 십의자리, 일의자리, 소수첫째, 소수둘째)
+  const [digitHundreds, setDigitHundreds] = useState('') // 백의 자리
+  const [digitTens, setDigitTens] = useState('') // 십의 자리
+  const [digitOnes, setDigitOnes] = useState('') // 일의 자리
+  const [digitTenths, setDigitTenths] = useState('') // 소수 첫째 자리
+  const [digitHundredths, setDigitHundredths] = useState('') // 소수 둘째 자리
 
   // 사운드 효과 함수
   const playSound = (isCorrect) => {
@@ -80,9 +82,11 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
     }
     
     setUserAnswer('')
-    setDigit1('')
-    setDigit2('')
-    setDigit3('')
+    setDigitHundreds('')
+    setDigitTens('')
+    setDigitOnes('')
+    setDigitTenths('')
+    setDigitHundredths('')
     setFeedback(null)
   }
 
@@ -101,11 +105,17 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    // 모든 자릿수가 입력되었는지 확인
-    if (digit1 === '' || digit2 === '' || digit3 === '') return
+    // 최소한 소수 부분은 입력되어야 함
+    if (digitTenths === '' || digitHundredths === '') return
     
     // 입력된 자릿수를 조합하여 답 만들기
-    const userAnswerNum = parseFloat(`${digit1}.${digit2}${digit3}`)
+    // 빈 칸은 0으로 처리하지 않고, 자연수 부분만 조합
+    const hundredsVal = digitHundreds === '' ? 0 : parseInt(digitHundreds)
+    const tensVal = digitTens === '' ? 0 : parseInt(digitTens)
+    const onesVal = digitOnes === '' ? 0 : parseInt(digitOnes)
+    const naturalPart = hundredsVal * 100 + tensVal * 10 + onesVal
+    
+    const userAnswerNum = parseFloat(`${naturalPart}.${digitTenths}${digitHundredths}`)
     const correctAnswer = parseFloat(calculateAnswer())
     
     if (Math.abs(correctAnswer - userAnswerNum) < 0.01) {
@@ -135,27 +145,35 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
       
       setTimeout(() => {
         setFeedback(null)
-        setDigit1('')
-        setDigit2('')
-        setDigit3('')
+        setDigitHundreds('')
+        setDigitTens('')
+        setDigitOnes('')
+        setDigitTenths('')
+        setDigitHundredths('')
       }, 2000)
     }
   }
   
   // 자릿수 입력 처리
-  const handleDigitChange = (digitNum, value) => {
+  const handleDigitChange = (position, value) => {
     // 숫자만 입력 가능하고 한 자리만
     if (value === '' || /^[0-9]$/.test(value)) {
-      if (digitNum === 1) setDigit1(value)
-      else if (digitNum === 2) setDigit2(value)
-      else if (digitNum === 3) setDigit3(value)
+      if (position === 'hundreds') setDigitHundreds(value)
+      else if (position === 'tens') setDigitTens(value)
+      else if (position === 'ones') setDigitOnes(value)
+      else if (position === 'tenths') setDigitTenths(value)
+      else if (position === 'hundredths') setDigitHundredths(value)
       
-      // 자동으로 다음 칸으로 이동
+      // 자동으로 다음 칸으로 이동 (오른쪽에서 왼쪽으로)
       if (value !== '') {
-        if (digitNum === 3) {
-          document.getElementById('digit2')?.focus()
-        } else if (digitNum === 2) {
-          document.getElementById('digit1')?.focus()
+        if (position === 'hundredths') {
+          document.getElementById('digit-tenths')?.focus()
+        } else if (position === 'tenths') {
+          document.getElementById('digit-ones')?.focus()
+        } else if (position === 'ones') {
+          document.getElementById('digit-tens')?.focus()
+        } else if (position === 'tens') {
+          document.getElementById('digit-hundreds')?.focus()
         }
       }
     }
@@ -193,14 +211,18 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
           <div className="vertical-math">
             <div className="math-row number-row">
               <span className="operator-space"></span>
-              <span className="digit-box">{Math.floor(num1)}</span>
+              <span className="digit-box">{Math.floor(num1 / 100) || ''}</span>
+              <span className="digit-box">{Math.floor(num1 / 10) % 10 || (num1 >= 10 ? '0' : '')}</span>
+              <span className="digit-box">{Math.floor(num1) % 10}</span>
               <span className="decimal-point">.</span>
               <span className="digit-box">{Math.floor((num1 * 10) % 10)}</span>
               <span className="digit-box">{Math.floor((num1 * 100) % 10)}</span>
             </div>
             <div className="math-row number-row">
               <span className="operator-display">{operation}</span>
-              <span className="digit-box">{Math.floor(num2)}</span>
+              <span className="digit-box">{Math.floor(num2 / 100) || ''}</span>
+              <span className="digit-box">{Math.floor(num2 / 10) % 10 || (num2 >= 10 ? '0' : '')}</span>
+              <span className="digit-box">{Math.floor(num2) % 10}</span>
               <span className="decimal-point">.</span>
               <span className="digit-box">{Math.floor((num2 * 10) % 10)}</span>
               <span className="digit-box">{Math.floor((num2 * 100) % 10)}</span>
@@ -212,35 +234,55 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
               <form onSubmit={handleSubmit} className="answer-form">
                 <span className="operator-space"></span>
                 <input
-                  id="digit1"
+                  id="digit-hundreds"
                   type="text"
                   maxLength="1"
-                  value={digit1}
-                  onChange={(e) => handleDigitChange(1, e.target.value)}
+                  value={digitHundreds}
+                  onChange={(e) => handleDigitChange('hundreds', e.target.value)}
                   disabled={feedback !== null}
                   className="digit-input"
-                  placeholder="?"
+                  placeholder=""
+                />
+                <input
+                  id="digit-tens"
+                  type="text"
+                  maxLength="1"
+                  value={digitTens}
+                  onChange={(e) => handleDigitChange('tens', e.target.value)}
+                  disabled={feedback !== null}
+                  className="digit-input"
+                  placeholder=""
+                />
+                <input
+                  id="digit-ones"
+                  type="text"
+                  maxLength="1"
+                  value={digitOnes}
+                  onChange={(e) => handleDigitChange('ones', e.target.value)}
+                  disabled={feedback !== null}
+                  className="digit-input"
+                  placeholder=""
                 />
                 <span className="decimal-point">.</span>
                 <input
-                  id="digit2"
+                  id="digit-tenths"
                   type="text"
                   maxLength="1"
-                  value={digit2}
-                  onChange={(e) => handleDigitChange(2, e.target.value)}
+                  value={digitTenths}
+                  onChange={(e) => handleDigitChange('tenths', e.target.value)}
                   disabled={feedback !== null}
                   className="digit-input"
-                  placeholder="?"
+                  placeholder=""
                 />
                 <input
-                  id="digit3"
+                  id="digit-hundredths"
                   type="text"
                   maxLength="1"
-                  value={digit3}
-                  onChange={(e) => handleDigitChange(3, e.target.value)}
+                  value={digitHundredths}
+                  onChange={(e) => handleDigitChange('hundredths', e.target.value)}
                   disabled={feedback !== null}
                   className="digit-input"
-                  placeholder="?"
+                  placeholder=""
                   autoFocus
                 />
               </form>
