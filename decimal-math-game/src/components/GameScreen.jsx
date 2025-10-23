@@ -212,6 +212,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
       else if (position === 'tens') setCarryTens(value)
       else if (position === 'ones') setCarryOnes(value)
       else if (position === 'tenths') setCarryTenths(value)
+      else if (position === 'hundredths') setCarryHundredths(value)
     }
   }
 
