@@ -55,60 +55,108 @@
   margin-bottom: 30px;
 }
 
-.problem-display {
+/* 세로셈 스타일 */
+.vertical-problem {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
   margin-bottom: 30px;
 }
 
-.number {
+.vertical-math {
+  background: white;
+  padding: 30px 50px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: inline-block;
+}
+
+.math-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+  font-family: 'Courier New', monospace;
+}
+
+.number-row {
+  height: 60px;
+}
+
+.operator-space {
+  width: 50px;
+  display: inline-block;
+}
+
+.operator-display {
+  width: 50px;
+  font-size: 3em;
+  font-weight: bold;
+  color: #667eea;
+  text-align: center;
+  display: inline-block;
+}
+
+.number-display {
   font-size: 3em;
   font-weight: bold;
   color: #2c3e50;
-  background: white;
-  padding: 20px 30px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  min-width: 120px;
-  text-align: center;
+  text-align: right;
+  min-width: 200px;
+  letter-spacing: 8px;
+  display: inline-block;
 }
 
-.operator {
+.line-row {
+  margin: 10px 0;
+}
+
+.horizontal-line {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+  margin-left: 50px;
+}
+
+.answer-row {
+  margin-top: 20px;
+}
+
+.answer-form {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.vertical-input {
   font-size: 3em;
   font-weight: bold;
-  color: #667eea;
-}
-
-.equals {
-  font-size: 3em;
-  font-weight: bold;
-  color: #667eea;
-}
-
-.answer-input input {
-  font-size: 2.5em;
-  padding: 20px 30px;
-  border: 3px solid #667eea;
-  border-radius: 15px;
-  text-align: center;
-  width: 200px;
-  font-weight: bold;
+  text-align: right;
+  min-width: 200px;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 4px solid #667eea;
+  background: transparent;
+  color: #2c3e50;
+  letter-spacing: 8px;
+  font-family: 'Courier New', monospace;
   transition: all 0.3s ease;
 }
 
-.answer-input input:focus {
+.vertical-input:focus {
   outline: none;
-  border-color: #764ba2;
-  box-shadow: 0 0 20px rgba(118, 75, 162, 0.3);
-  transform: scale(1.05);
+  border-bottom-color: #764ba2;
+  background: rgba(102, 126, 234, 0.05);
 }
 
-.answer-input input:disabled {
-  background: #f0f0f0;
+.vertical-input:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
+}
+
+.vertical-input::placeholder {
+  color: #bbb;
+  letter-spacing: normal;
 }
 
 .feedback {
@@ -215,20 +263,33 @@
     padding: 20px;
   }
 
-  .number {
-    font-size: 2em;
-    padding: 15px 20px;
-    min-width: 80px;
+  .vertical-math {
+    padding: 20px 30px;
   }
 
-  .operator, .equals {
+  .operator-space {
+    width: 30px;
+  }
+
+  .operator-display {
+    width: 30px;
     font-size: 2em;
   }
 
-  .answer-input input {
-    font-size: 1.8em;
-    padding: 15px 20px;
-    width: 150px;
+  .number-display {
+    font-size: 2em;
+    min-width: 150px;
+    letter-spacing: 5px;
+  }
+
+  .vertical-input {
+    font-size: 2em;
+    min-width: 150px;
+    letter-spacing: 5px;
+  }
+
+  .horizontal-line {
+    margin-left: 30px;
   }
 
   .stat-number {
@@ -240,7 +301,7 @@
     padding: 15px;
   }
 
-  .problem-display {
-    gap: 10px;
+  .number-row {
+    height: 45px;
   }
 }

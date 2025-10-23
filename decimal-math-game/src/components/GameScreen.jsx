@@ -158,23 +158,33 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
       <div className="problem-card">
         <div className="problem-title">레벨 {level} 문제</div>
         
-        <div className="problem-display">
-          <div className="number">{num1}</div>
-          <div className="operator">{operation}</div>
-          <div className="number">{num2}</div>
-          <div className="equals">=</div>
-          <div className="answer-input">
-            <form onSubmit={handleSubmit}>
-              <input
-                type="number"
-                step="0.01"
-                value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
-                placeholder="답을 입력하세요"
-                disabled={feedback !== null}
-                autoFocus
-              />
-            </form>
+        <div className="vertical-problem">
+          <div className="vertical-math">
+            <div className="math-row number-row">
+              <span className="operator-space"></span>
+              <span className="number-display">{num1.toFixed(2)}</span>
+            </div>
+            <div className="math-row number-row">
+              <span className="operator-display">{operation}</span>
+              <span className="number-display">{num2.toFixed(2)}</span>
+            </div>
+            <div className="math-row line-row">
+              <div className="horizontal-line"></div>
+            </div>
+            <div className="math-row answer-row">
+              <form onSubmit={handleSubmit} className="answer-form">
+                <input
+                  type="number"
+                  step="0.01"
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  placeholder="?"
+                  disabled={feedback !== null}
+                  autoFocus
+                  className="vertical-input"
+                />
+              </form>
+            </div>
           </div>
         </div>
 
