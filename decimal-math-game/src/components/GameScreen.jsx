@@ -152,29 +152,19 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
         generateProblem()
       }, 1500)
     } else {
-      // 오답!
-      playSound(false) // 오답 사운드 재생
-      setFeedback({ 
-        type: 'wrong', 
-        correctAnswer: correctAnswer.toFixed(2) 
-      })
-      setStreak(0)
-      onWrong()
-      
-      setTimeout(() => {
-        setFeedback(null)
-        setDigitHundreds('')
-        setDigitTens('')
-        setDigitOnes('')
-        setDigitTenths('')
-        setDigitHundredths('')
-        setCarryHundreds('')
-        setCarryTens('')
-        setCarryOnes('')
-        setCarryTenths('')
-        setCarryHundredths('')
-      }, 2000)
-    }
+  // 오답!
+  playSound(false) // 오답 사운드 재생
+  setFeedback({ 
+    type: 'wrong', 
+    correctAnswer: correctAnswer.toFixed(2) 
+  })
+  setStreak(0)
+  onWrong()
+  
+  setTimeout(() => {
+    generateProblem()  // ← 이 줄로 바꾸기!
+  }, 2000)
+}
   }
   
   // 자릿수 입력 처리
@@ -389,6 +379,7 @@ function GameScreen({ level, onCorrect, onWrong, totalCorrect, totalWrong }) {
                 <div className="feedback-icon">😅</div>
                 <div className="feedback-text">틀렸어요!</div>
                 <div className="feedback-answer">정답: {feedback.correctAnswer}</div>
+                <div className="feedback-answer">문제: {num1} {operation} {num2}</div>
               </>
             )}
           </div>
